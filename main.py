@@ -1,12 +1,4 @@
 import board12 as bd
-# import keyboard as kb
-
-
-
-# print(
-#     "Instructions:
-#     Hi, welcome to 
-#     ")
 
 instructions = """
 Hi, welcome to 2048!
@@ -28,44 +20,6 @@ while(1):
     else:
         print("Invalid Key\n")
 
-
-# a.printmatrix()
-
-# instructions="""
-# Press A S D W keys to swipe left, down, right and up. 
-# """
-
-# while(1):
-#     inp=input("Key: ")
-#     print(inp)
-#     ismax=0
-#     if(inp=='A' or inp == 'a'):
-#         ismax= a.rearrange_rows(1)
-#         a.regenerate()
-#         a.printmatrix()
-#     elif(inp=='D' or inp == 'd'):
-#         ismax= a.rearrange_rows(-1)
-#         a.regenerate()
-#         a.printmatrix()
-#     elif(inp=='W' or inp == 'w'):
-#         ismax = a.rearrange_cols(1)
-#         a.regenerate()
-#         a.printmatrix()
-#     elif(inp=='S' or inp == 's'):
-#         ismax = a.rearrange_rows(-1)
-#         a.regenerate()
-#         a.printmatrix()
-#     elif(inp=='Q' or inp=='q'):
-#         print("Exiting the game.")
-#         exit()
-#     else:
-#         print("Invalid key")
-
-#     if(ismax==1):
-#         print("Congratulations! You won!!")
-#     elif(ismax==-1):
-#         print("You lost. Better luck next time")
-
 def play():
     a=bd.GameBoard()
     a.generate_initial()
@@ -79,21 +33,20 @@ Press A S D W keys to swipe left, down, right and up.
     while(1):
         inp=input("Key: ")
         # print(inp)
-        ismax=0
         if(inp=='A' or inp == 'a'):
-            ismax= a.rearrange_rows(1)
+            a.rearrange_rows(1)
             a.regenerate()
             a.printmatrix()
         elif(inp=='D' or inp == 'd'):
-            ismax= a.rearrange_rows(-1)
+            a.rearrange_rows(-1)
             a.regenerate()
             a.printmatrix()
         elif(inp=='W' or inp == 'w'):
-            ismax = a.rearrange_cols(1)
+            a.rearrange_cols(1)
             a.regenerate()
             a.printmatrix()
         elif(inp=='S' or inp == 's'):
-            ismax = a.rearrange_cols(-1)
+            a.rearrange_cols(-1)
             a.regenerate()
             a.printmatrix()
         elif(inp=='Q' or inp=='q'):
@@ -102,10 +55,15 @@ Press A S D W keys to swipe left, down, right and up.
         else:
             print("Invalid key")
 
-        if(ismax==1):
+        lose, win = a.winorlose()
+
+        if(win==1):
             print("Congratulations! You won!!")
-        elif(ismax==-1):
-            print("You lost. Better luck next time")
+            break
+
+        if(lose==0):
+            print("You lost. Better luck next time.\n")
+            break
 
 while(1):
     play()
@@ -114,12 +72,13 @@ while(1):
 Press R to play again. Press Q to quit.
     """
 
+    print(replay)
     while(1):
         inp=input("Key: ")
         # print(inp)
         if(inp=='r' or inp=='R'):
             print("Great! Let's start the game")
-            continue
+            break
         elif(inp=='Q' or inp=='q'):
             print("Exiting the game.")
             exit()

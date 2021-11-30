@@ -1,7 +1,7 @@
 import random
 # import deque from collections
 
-maxindex=2048
+maxindex=11
 sign = lambda a: ((a>0)-(a<0))
 transpose= lambda m: [[m[j][i] for j in range(len(m))] for i in range(len(m[0]))]
 
@@ -12,7 +12,6 @@ def power(list):
 def arrange(row, lor):
     isadd=0
     retrow=[0]*4
-    ismax=0
     if(lor==1):
         ran=range(4)
         elem=0
@@ -27,8 +26,6 @@ def arrange(row, lor):
                 isadd=row[i]
             elif(isadd==row[i]):
                 retrow[elem]=isadd+1
-                if(retrow[elem]==maxindex):
-                    ismax=1
                 isadd=0
                 elem+=lor
 
@@ -40,7 +37,7 @@ def arrange(row, lor):
     if(elem!=last+lor):
         retrow[elem]=isadd
 
-    return retrow, ismax
+    return retrow
 
 class GameBoard:
     def __init__(self):
@@ -64,30 +61,41 @@ class GameBoard:
                     empties.append((i,j))
         try:
             (p1, p2)= random.choices(empties)[0]
+            self.matrix[p1][p2]=random.choices([1,2], weights=(9,1))[0]
         except:
             pass
-        self.matrix[p1][p2]=random.choices([1,2], weights=(9,1))[0]
 
     def rearrange_rows(self, lor):
-        ismax=0
         for i in range(4):
-            temp=ismax
-            self.matrix[i],ismax = arrange(self.matrix[i], lor)
-            ismax=max(ismax, temp)
+            self.matrix[i]= arrange(self.matrix[i], lor)
 
-        return ismax
+
 
     def rearrange_cols(self, lor):
-        ismax=0
         mat=transpose(self.matrix)
         for i in range(4):
-            temp=ismax
-            mat[i], ismax =arrange(mat[i], lor)
-            ismax=max(ismax, temp)
+            mat[i] =arrange(mat[i], lor)
         self.matrix=transpose(mat)
 
-        return ismax
+    def winorlose(self):
+        row=0
+        col=0
+        val=0
+        win=0
+        if(self.matrix[0][0]==maxindex):
+            win=1
+        for i in range(0,4):
+            for j in range(1,4):
+                if(self.matrix[i][j]!=0 and self.matrix[i][j]==self.matrix[i][j-1]): row+=1
+                if(self.matrix[i][j]!=0 and self.matrix[j][i]==self.matrix[j-1][i]): col+=1
+                if(self.matrix[i][j]==0):
+                    val+=1
+                if(self.matrix[i][j]==maxindex):
+                    win=1
+        return bool(row+col+val), win
+
 
     def printmatrix(self):
         for i in range(4):
             print(power(self.matrix[i]))
+        print("\n")
