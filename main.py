@@ -93,7 +93,7 @@ Press A S D W keys to swipe left, down, right and up.
             a.regenerate()
             a.printmatrix()
         elif(inp=='S' or inp == 's'):
-            ismax = a.rearrange_rows(-1)
+            ismax = a.rearrange_cols(-1)
             a.regenerate()
             a.printmatrix()
         elif(inp=='Q' or inp=='q'):
