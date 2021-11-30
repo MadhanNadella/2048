@@ -10,7 +10,6 @@ print(instructions)
 
 while(1):
     inp=input("Key: ")
-    # print(inp)
     if(inp=='y' or inp=='Y'):
         print("Great! Let's start the game")
         break
@@ -29,10 +28,10 @@ def play():
 Press A S D W keys to swipe left, down, right and up. 
     """
     print(instructions)
-
+    #functionality for ASDW
     while(1):
         inp=input("Key: ")
-        # print(inp)
+        # rearrange(), followed by regenerate() relicates the action of a swipe. 
         if(inp=='A' or inp == 'a'):
             a.rearrange_rows(1)
             a.regenerate()
@@ -56,7 +55,7 @@ Press A S D W keys to swipe left, down, right and up.
             print("Invalid key")
 
         lose, win = a.winorlose()
-
+        # continue game
         if(win==1):
             print("Congratulations! You won!!")
             break
